@@ -14,8 +14,6 @@ const spotifyApi = new SpotifyWebApi({
   redirectUri: redirectURL
 });
 
-console.log(spotifyApi);
-
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ThemeProvider theme={themeOptions}>
