@@ -1,14 +1,12 @@
 import './App.css';
 import {Stack, Button, Box} from "@mui/material"
-import Login from './pages/Login'
+import Dashboard from './components/Dashboard/Dashboard';
 
 function App({spotifyApi}) {
 	console.log(spotifyApi);
 	return (
 		<Box className="App">
-			<Login>
-
-			</Login>
+			<Dashboard spotifyApi={spotifyApi}/>
 		</Box>
 	);
 }
