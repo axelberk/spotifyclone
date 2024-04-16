@@ -5,15 +5,27 @@ import HomeIcon from '@mui/icons-material/Home';
 import NavPlaylist from "../NavPlaylist/NavPlaylist";
 
 const SideNav = ({spotifyApi, token}) => {
+    const [playlists, setPlaylists] = useState([])
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
         async function getPlaylists() {
             if(!spotifyApi) return;
 
             const data = await spotifyApi.getUserPlaylists();
-            console.log(data.body);
+            setPlaylists(data.body.items)
+            setLoading(false);
         }
         getPlaylists();
     }, [spotifyApi, token])
+
+    const renderPlaylists = () => {
+        if(loading) {
+            return [1,2,3,4,5,7,8,9,10].map((_, i) => <NavPlaylist key={i} loading={loading}/>)
+        }
+        console.log({playlists});
+        return playlists.map((playlist, i) => <NavPlaylist name={playlist.name} id={playlist.id} loading={loading} key={i}/>)
+    }
 
     return (
     <Box sx={{
@@ -31,7 +43,7 @@ const SideNav = ({spotifyApi, token}) => {
             <Divider sx={{backgroundColor: "ffffff40"}}/>
         </Box>
         <Box sx={{overflowY: "auto", flex: 1}}>
-            <NavPlaylist loading={false} name="Pop" id="123"/>
+            {renderPlaylists()}
         </Box>
     </Box>
     )
