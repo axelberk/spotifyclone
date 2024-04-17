@@ -1,20 +1,20 @@
 import { Box, Typography, Avatar } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useCallback } from 'react-router-dom';
 
 const Playlist = ({spotifyApi, token}) => {
     const [playlistInfo, setPlaylistInfo] = useState()
     const [song, setSongs] = useState([])
     const {id} = useParams()
 
-    const formatSongs = (items) => 
-        items.map((item, i) => {
-            console.log({item, i});
-            const {track} = item
-            track.contextUri = `spotify:playlist:${id}`
-            track.position = i
-            return track
-    })
+    const formatSongs = useCallback((items) => 
+    items.map((item, i) => {
+        console.log({item, i});
+        const {track} = item
+        track.contextUri = `spotify:playlist:${id}`
+        track.position = i
+        return track
+}), [id])
 
     useEffect(() => {
         const getData = async () => {
@@ -35,7 +35,7 @@ const Playlist = ({spotifyApi, token}) => {
         }
 
         getData();
-    }, [id])
+    }, [id, formatSongs])
 
 	return (
 		<Box id="Playlist__page" sx={{ backgroundColor: 'background.paper', flex: 1, overflowY: 'auto' }}>
