@@ -1,10 +1,11 @@
-import { Box, Typography, Avatar } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { useParams, useCallback } from 'react-router-dom';
+import { Box, Typography, Avatar, Skeleton } from '@mui/material';
+import { useEffect, useState, useCallback } from 'react';
+import { useParams } from 'react-router-dom';
 
 const Playlist = ({spotifyApi, token}) => {
     const [playlistInfo, setPlaylistInfo] = useState()
     const [song, setSongs] = useState([])
+    const [status, setStatus] = useState({isLoading: true, isError: null})
     const {id} = useParams()
 
     const formatSongs = useCallback((items) => 
@@ -18,6 +19,7 @@ const Playlist = ({spotifyApi, token}) => {
 
     useEffect(() => {
         const getData = async () => {
+            setStatus({isLoading: true, isError: null})
             try {
                 const playlistDetails = await spotifyApi.getPlaylist(id)
                 setPlaylistInfo({
@@ -31,10 +33,13 @@ const Playlist = ({spotifyApi, token}) => {
                 setSongs(formattedSongs)
             } catch (e) {
                 console.error(e)
+                setStatus({isLoading: false, isError: e})
             }
         }
 
-        getData();
+        getData().finally(() => {
+            setStatus({isLoading: false, isError: null})
+        });
     }, [id, formatSongs])
 
 	return (
@@ -48,18 +53,23 @@ const Playlist = ({spotifyApi, token}) => {
                 gap: 3,
                 boxSizing: "border-box",
                 flexDirection: {xs: "column", md: "row"}
-            }}>
-				<Avatar
+            }}
+            >
+				{status.isLoading ? ( 
+                <Skeleton variant="square"sx={{ width: { xs: '100%', md: 235 }, height: { xs: '100%', md: 235 } }}/> 
+                ) : (
+                <Avatar
 					src={playlistInfo?.image}
 					variant="square"
 					alt={playlistInfo?.name}
 					sx={{ boxShadow: 15, width: { xs: '100%', md: 235 }, height: { xs: '100%', md: 235 } }}
 				/>
+                )}
 				<Box>
 					<Typography sx={{ fontSize: 12, fontWeight: 'bold', color: 'text.primary' }}>Playlist</Typography>
-					<Typography sx={{ fontSize: { xs: 42, md: 72 }, fontWeight: 'bold', color: 'text.primary' }}>
+					{status.isLoading ? <Skeleton variant="text" sx={{ fontSize: { xs: 42, md: 72 }, width: 200}} /> : <Typography sx={{ fontSize: { xs: 42, md: 72 }, fontWeight: 'bold', color: 'text.primary' }}>
 						{playlistInfo?.name}
-					</Typography>
+					</Typography>}
 				</Box>
 			</Box>
 		</Box>
