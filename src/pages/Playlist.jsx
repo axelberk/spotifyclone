@@ -7,6 +7,15 @@ const Playlist = ({spotifyApi, token}) => {
     const [song, setSongs] = useState([])
     const {id} = useParams()
 
+    const formatSongs = (items) => 
+        items.map((item, i) => {
+            console.log({item, i});
+            const {track} = item
+            track.contextUri = `spotify:playlist:${id}`
+            track.position = i
+            return track
+    })
+
     useEffect(() => {
         const getData = async () => {
             try {
@@ -17,8 +26,9 @@ const Playlist = ({spotifyApi, token}) => {
                 })
                 const {items} = playlistDetails.body.tracks
                 // format songs
-                setSongs(items)
-                console.log(items);
+                
+                const formattedSongs = formatSongs(items)
+                setSongs(formattedSongs)
             } catch (e) {
                 console.error(e)
             }
