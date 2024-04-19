@@ -5,13 +5,13 @@ import SongTable from '../components/SongTable/SongTable';
 
 const Playlist = ({spotifyApi, token}) => {
     const [playlistInfo, setPlaylistInfo] = useState()
-    const [song, setSongs] = useState([])
+    const [songs, setSongs] = useState([])
     const [status, setStatus] = useState({isLoading: true, isError: null})
     const {id} = useParams()
 
     const formatSongs = useCallback((items) => 
     items.map((item, i) => {
-        console.log({item, i});
+        
         const {track} = item
         track.contextUri = `spotify:playlist:${id}`
         track.position = i
@@ -29,7 +29,6 @@ const Playlist = ({spotifyApi, token}) => {
                 })
                 const {items} = playlistDetails.body.tracks
                 // format songs
-                
                 const formattedSongs = formatSongs(items)
                 setSongs(formattedSongs)
             } catch (e) {
@@ -73,7 +72,7 @@ const Playlist = ({spotifyApi, token}) => {
 					</Typography>}
 				</Box>
 			</Box>
-            <SongTable />
+            <SongTable songs={songs} loading={status.isLoading} spotifyApi={spotifyApi}/>
 		</Box>
 	);
 };

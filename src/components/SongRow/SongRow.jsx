@@ -29,10 +29,10 @@ const SongRow = ({ images, title, artist, album, duration, i, loading }) => {
 				</Box>
 			</Grid>
 			<Grid xs={3} item sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center' }}>
-            {loading ? <Skeleton variant='text' width={50} height={24}/> : album}
+                {loading ? <Skeleton variant='text' width={50} height={24}/> : album}
 			</Grid>
 			<Grid xs={3} item sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-            {loading ? <Skeleton variant='text' width={50} height={18}/> : duration}
+                {loading ? <Skeleton variant='text' width={50} height={18}/> : duration}
 			</Grid>
 		</Grid>
 	);
