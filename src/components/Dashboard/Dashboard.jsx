@@ -27,7 +27,7 @@ const Dashboard = ({spotifyApi}) => {
                 <Route path="/" element={<div><Home /></div>}/>
             </Routes>
         </Box>
-        {token && <Player spotifyApi={spotifyApi} />}
+        {token && <Player spotifyApi={spotifyApi} token={token} />}
     </Box>
 }
 

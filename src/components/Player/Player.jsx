@@ -1,6 +1,40 @@
 import { Box, Grid, Typography, Avatar } from '@mui/material';
+import { useEffect } from 'react';
 
-const Player = ({ spotifyApi }) => {
+const Player = ({ spotifyApi, token }) => {
+    useEffect(() => {
+        const script = document.createElement("script");
+        script.src = "https://sdk.scdn.co/spotify-player.js";
+        script.async = true;
+    
+        document.body.appendChild(script);
+    
+        window.onSpotifyWebPlaybackSDKReady = () => {
+    
+            const player = new window.Spotify.Player({
+                name: 'Techover Player',
+                getOAuthToken: cb => { cb(token); },
+                volume: 0.5
+            });
+    
+            player.addListener('ready', ({ device_id }) => {
+                console.log('Ready with Device ID', device_id);
+            });
+    
+            player.addListener('not_ready', ({ device_id }) => {
+                console.log('Device ID has gone offline', device_id);
+            });
+    
+            player.addListener("player_state_changed", (state) => {
+                console.log(state);
+            })
+    
+            player.connect();
+    
+        };
+    }, []);
+    
+
 	return (
 		<Box>
 			<Grid container px={3} sx={{backgroundColor: "background.paper", height: 100, cursor: {xs: "pointer", md: "auto"}, width: "100%", borderTop: "1px solid #292929"}}>
