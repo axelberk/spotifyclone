@@ -23,7 +23,7 @@ const SideNav = ({spotifyApi, token}) => {
         if(loading) {
             return [1,2,3,4,5,7,8,9,10].map((_, i) => <NavPlaylist key={i} loading={loading}/>)
         }
-        console.log({playlists});
+       
         return playlists.map((playlist, i) => <NavPlaylist name={playlist.name} id={playlist.id} loading={loading} key={i}/>)
     }
 

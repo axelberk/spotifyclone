@@ -3,7 +3,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import SongRow from '../SongRow/SongRow';
 
 const SongTable = ({ songs, loading, spotifyApi }) => {
-	console.log(songs, loading, spotifyApi);
+	
 
 	const renderSongs = () => {
 		if (loading) {
@@ -15,7 +15,7 @@ const SongTable = ({ songs, loading, spotifyApi }) => {
 				album={song.album.name}
 				images={song.album.images}
 				title={song.name}
-				artist={song.artists.map(artist => artist.name)}
+				artist={song.artists[0].name}
 				duration={song.duration_ms / 1000}
 				key={i}
 				i={i}

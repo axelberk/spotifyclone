@@ -1,5 +1,6 @@
 import { Box, Grid, Typography, Avatar } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { getAccessTokenFromStorage } from '../../utils/getAccessTokenFromStorage';
 
 const Player = ({ spotifyApi, token }) => {
 const [localPlayer, setLocalPlayer] = useState(false)
@@ -11,6 +12,7 @@ const [progress, setProgress] = useState()
 
 
     useEffect(() => {
+        const token = getAccessTokenFromStorage();
         const script = document.createElement("script");
         script.src = "https://sdk.scdn.co/spotify-player.js";
         script.async = true;
@@ -36,15 +38,16 @@ const [progress, setProgress] = useState()
             });
     
             player.addListener("player_state_changed", (state) => {
+                console.log(state.track_window.current_track);
 
-                if (!state || !state.track_window || !state.track_window.current_track) {
+                if (!state || !state.track_window || !state.track_window?.current_track) {
                     return;
                 }
                 
-                if(state || !state.track_window?.current_track) {
+                if(!state || !state.track_window?.current_track) {
                     return
                 }
-                console.log(state.track_window.current_track);
+                
 
                 const duration = state.track_window.current_track.duration_ms / 1000;
                 const progress = state.position / 1000;
@@ -54,6 +57,7 @@ const [progress, setProgress] = useState()
                 setCurrentTrack(state.track_window.current_track)
             })
     
+            setLocalPlayer(player)
             player.connect();
     
         };
@@ -71,6 +75,17 @@ const [progress, setProgress] = useState()
         }
     }, [localPlayer])
 
+    useEffect(() => {
+        const transferPlayback = async () => {
+            if(device) {
+                const res = await spotifyApi.getMyDevices()
+                console.log(res);
+                await spotifyApi.transferMyPlayback([device], false)
+            }
+        }
+        transferPlayback()
+    }, [device, spotifyApi])
+
 	return (
 		<Box>
 			<Grid container px={3} sx={{backgroundColor: "background.paper", height: 100, cursor: {xs: "pointer", md: "auto"}, width: "100%", borderTop: "1px solid #292929"}}>
@@ -78,7 +93,7 @@ const [progress, setProgress] = useState()
 					<Avatar src={current_track?.album.images[0].url} alt={current_track?.album.name} variant="square" sx={{width: 56, height: 56, marginRight: 2}}/>
                     <Box>
                         <Typography sx={{color: "text.primary", fontSize: 14}}>{current_track?.name}</Typography>
-                        <Typography sx={{color: "text.secondary", fontSize: 10}}>{current_track?.artists[0]}</Typography>
+                        <Typography sx={{color: "text.secondary", fontSize: 10}}>{current_track?.artists[0].name}</Typography>
                     </Box>
 				</Grid>
 				<Grid
