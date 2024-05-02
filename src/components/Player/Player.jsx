@@ -10,6 +10,7 @@ const Player = ({ spotifyApi, token }) => {
 	const [device, setDevice] = useState();
 	const [duration, setDuration] = useState();
 	const [progress, setProgress] = useState();
+	const [active, setActive] = useState();
 
 	useEffect(() => {
 		const token = getAccessTokenFromStorage();
@@ -55,6 +56,10 @@ const Player = ({ spotifyApi, token }) => {
 				setProgress(progress);
 				setIsPaused(state.paused);
 				setCurrentTrack(state.track_window.current_track);
+
+				player.getCurrentState().then((state) => {
+					!state ? setActive(false) : setActive(true);
+				});
 			});
 
 			setLocalPlayer(player);
@@ -74,7 +79,7 @@ const Player = ({ spotifyApi, token }) => {
 		};
 	}, [localPlayer]);
 
-	useEffect(() => {
+	/* useEffect(() => {
 		const transferPlayback = async () => {
 			if (device) {
 				const res = await spotifyApi.getMyDevices();
@@ -83,7 +88,7 @@ const Player = ({ spotifyApi, token }) => {
 			}
 		};
 		transferPlayback();
-	}, [device, spotifyApi]);
+	}, [device, spotifyApi]); */
 
 	return (
 		<Box>
@@ -117,7 +122,13 @@ const Player = ({ spotifyApi, token }) => {
 					md={4}
 					item
 				>
-					<PlayerControls progress={progress} isPaused={isPaused} duration={duration} player={localPlayer} />
+					{active ? <PlayerControls 
+					progress={progress} 
+					isPaused={isPaused} 
+					duration={duration} 
+					player={localPlayer} 
+					/> : <Box>Please transfer Playback</Box>}
+					
 				</Grid>
 				<Grid xs={6} md={4} item sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
 					Volume
