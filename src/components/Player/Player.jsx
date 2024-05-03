@@ -2,6 +2,7 @@ import { Box, Grid, Typography, Avatar } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { getAccessTokenFromStorage } from '../../utils/getAccessTokenFromStorage';
 import PlayerControls from '../PlayerControls/PlayerControls';
+import PlayerVolume from '../PlayerVolume/playerVolume';
 
 const Player = ({ spotifyApi, token }) => {
 	const [localPlayer, setLocalPlayer] = useState(false);
@@ -131,7 +132,7 @@ const Player = ({ spotifyApi, token }) => {
 					
 				</Grid>
 				<Grid xs={6} md={4} item sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-					Volume
+					<PlayerVolume></PlayerVolume>
 				</Grid>
 			</Grid>
 		</Box>

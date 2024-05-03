@@ -38,7 +38,6 @@ const PlayerControls = ({ isPaused, duration, progress, player }) => {
 					size="small"
 					sx={{ color: 'text.primary' }}
 					onClick={() => {
-						
 						player.togglePlay();
 					}}
 				>
