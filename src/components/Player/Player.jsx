@@ -132,7 +132,7 @@ const Player = ({ spotifyApi, token }) => {
 					
 				</Grid>
 				<Grid xs={6} md={4} item sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-					<PlayerVolume></PlayerVolume>
+					<PlayerVolume player={localPlayer}/>
 				</Grid>
 			</Grid>
 		</Box>
