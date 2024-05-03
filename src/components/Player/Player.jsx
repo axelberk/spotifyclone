@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { getAccessTokenFromStorage } from '../../utils/getAccessTokenFromStorage';
 import PlayerControls from '../PlayerControls/PlayerControls';
 import PlayerVolume from '../PlayerVolume/playerVolume';
+import PlayerOverlay from '../PlayerOverlay/PlayerOverlay';
 
 const Player = ({ spotifyApi, token }) => {
 	const [localPlayer, setLocalPlayer] = useState(false);
@@ -12,6 +13,7 @@ const Player = ({ spotifyApi, token }) => {
 	const [duration, setDuration] = useState();
 	const [progress, setProgress] = useState();
 	const [active, setActive] = useState();
+	const [playerOverlayIsOpen, setPlayerOverlayIsOpen] = useState(false)
 
 	useEffect(() => {
 		const token = getAccessTokenFromStorage();
@@ -94,6 +96,7 @@ const Player = ({ spotifyApi, token }) => {
 	return (
 		<Box>
 			<Grid
+			onClick={() => setPlayerOverlayIsOpen((prevstate) => !prevstate)}
 				container
 				px={3}
 				sx={{
@@ -135,6 +138,7 @@ const Player = ({ spotifyApi, token }) => {
 					<PlayerVolume player={localPlayer}/>
 				</Grid>
 			</Grid>
+			<PlayerOverlay playerOverlayIsOpen={playerOverlayIsOpen}/>
 		</Box>
 	);
 };
