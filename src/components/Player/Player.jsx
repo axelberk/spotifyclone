@@ -13,7 +13,7 @@ const Player = ({ spotifyApi, token }) => {
 	const [duration, setDuration] = useState();
 	const [progress, setProgress] = useState();
 	const [active, setActive] = useState();
-	const [playerOverlayIsOpen, setPlayerOverlayIsOpen] = useState(false)
+	const [playerOverlayIsOpen, setPlayerOverlayIsOpen] = useState(false);
 
 	useEffect(() => {
 		const token = getAccessTokenFromStorage();
@@ -96,7 +96,7 @@ const Player = ({ spotifyApi, token }) => {
 	return (
 		<Box>
 			<Grid
-			onClick={() => setPlayerOverlayIsOpen((prevstate) => !prevstate)}
+				onClick={() => setPlayerOverlayIsOpen((prevstate) => !prevstate)}
 				container
 				px={3}
 				sx={{
@@ -126,19 +126,25 @@ const Player = ({ spotifyApi, token }) => {
 					md={4}
 					item
 				>
-					{active ? <PlayerControls 
-					progress={progress} 
-					isPaused={isPaused} 
-					duration={duration} 
-					player={localPlayer} 
-					/> : <Box>Please transfer Playback</Box>}
-					
+					{active ? (
+						<PlayerControls
+							progress={progress}
+							isPaused={isPaused}
+							duration={duration}
+							player={localPlayer}
+						/>
+					) : (
+						<Box>Please transfer Playback</Box>
+					)}
 				</Grid>
 				<Grid xs={6} md={4} item sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-					<PlayerVolume player={localPlayer}/>
+					<PlayerVolume player={localPlayer} />
 				</Grid>
 			</Grid>
-			<PlayerOverlay playerOverlayIsOpen={playerOverlayIsOpen}/>
+			<PlayerOverlay
+				playerOverlayIsOpen={playerOverlayIsOpen}
+				closeOverlay={() => setPlayerOverlayIsOpen(false)}
+			/>
 		</Box>
 	);
 };
