@@ -1,5 +1,6 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, List } from '@mui/material';
 import { useEffect, useState } from 'react';
+import PlaylistItem from '../components/PlaylistItem/PlaylistItem';
 
 const Library = ({token, spotifyApi}) => {
 
@@ -18,6 +19,14 @@ const Library = ({token, spotifyApi}) => {
         getPlaylists();
     }, [spotifyApi, token])
 
+    const renderPlaylistItems = () => {
+        if(loading) {
+            return [1,2,3,4,5,6,7].map((e, i) => <PlaylistItem loading={loading} key={i}/>)
+        }
+
+        return playlists.map((playlist, i) => <PlaylistItem key={i} loading={loading} {...playlist}/>)
+    }
+
 	return (
 		<Box
 			id="Library"
@@ -33,6 +42,7 @@ const Library = ({token, spotifyApi}) => {
             <Typography py={3} sx={{color: "text.primary", fontSize: 30}}>
                 Ditt bibliotek
             </Typography>
+            <List>{renderPlaylistItems()}</List>
         </Box>
 	);
 };
