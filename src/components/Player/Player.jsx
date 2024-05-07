@@ -149,6 +149,7 @@ const Player = ({ spotifyApi, token }) => {
 				duration={duration}
 				player={localPlayer}
 				current_track={current_track}
+				active={active}
 			/>
 		</Box>
 	);
