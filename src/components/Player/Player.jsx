@@ -25,7 +25,7 @@ const Player = ({ spotifyApi, token }) => {
 
 		window.onSpotifyWebPlaybackSDKReady = () => {
 			const player = new window.Spotify.Player({
-				name: 'Techover Player 2',
+				name: 'Axels Spotify Clone',
 				getOAuthToken: (cb) => {
 					cb(token);
 				},

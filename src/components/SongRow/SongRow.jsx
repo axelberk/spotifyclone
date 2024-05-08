@@ -1,7 +1,8 @@
 import { Box, Avatar, Grid, Typography, Skeleton } from '@mui/material';
 import { formatTime } from '../../utils/formatTime';
+import PlayerControls from '../PlayerControls/PlayerControls';
 
-const SongRow = ({ images, title, artist, album, duration, i, loading, position, contextUri, spotifyApi }) => {
+const SongRow = ({ images, title, artist, album, duration, i, loading, position, contextUri, spotifyApi}) => {
 	const image = images?.length > 0 ? images[0].url : null;
 
      	const onRowClick = async () => {
@@ -44,6 +45,7 @@ const SongRow = ({ images, title, artist, album, duration, i, loading, position,
 			<Grid xs={3} item sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
                 {loading ? <Skeleton variant='text' width={50} height={18}/> : formatTime(duration)}
 			</Grid>
+			
 		</Grid>
 	);
 };

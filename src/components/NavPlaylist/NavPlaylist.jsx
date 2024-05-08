@@ -11,6 +11,7 @@ const NavPlaylist = ({ name, id, loading }) => {
 		>
             <Box
 				px={3}
+				className="playlist__name"
 				sx={{
 					cursor: 'pointer',
 					'&:hover': { color: 'white' },

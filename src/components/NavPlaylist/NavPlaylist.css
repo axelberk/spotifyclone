@@ -5,3 +5,8 @@
 .playlist__navlink.active {
     color: #1bd760 !important
 }
+
+.playlist__navlink .playlist__name {
+    font-size: 12px;
+    margin-bottom: 10px; 
+}
