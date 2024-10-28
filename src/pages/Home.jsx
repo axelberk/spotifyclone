@@ -13,7 +13,7 @@ const Home = () => {
     }>
         <img src="/axel.jpg" alt="axel" style={{maxWidth: "25%", maxHeight: "25%"}} />
         <Box sx={{maxwidth: "70%", paddingLeft: 5, paddingRight: 5}}>
-            <Typography padding={1}>Hello, and welcome to my Spotify Clone! To use it, you will need to have Spotify open on either your phone, the browser application or the application for your operating system. There, you can connect to "Axels Spotify Clone" as the output device. Please enjoy!
+            <Typography padding={1}>Hello, and welcome to my basic Spotify Clone! To use it, you will need to have Spotify open on either your phone, the browser application or the application for your operating system. There, you can connect to "Axels Spotify Clone" as the output device. Please enjoy!
             </Typography>
         </Box>
        
