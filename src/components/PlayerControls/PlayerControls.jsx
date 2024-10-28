@@ -11,11 +11,11 @@ const PlayerControls = ({ isPaused, duration, progress, player }) => {
     useEffect(() => {
         const intervalId = setInterval(() => {
             if(!isPaused && player) {
-                setCurrentProgress((prevState) => prevState + 1)
+                setCurrentProgress((prevState) => Math.min(prevState + 1, duration))
             }
         }, 1000)
         return () => clearInterval(intervalId)
-    }, [isPaused, player])
+    }, [isPaused, player, duration])
     
     useEffect(() => {
         setCurrentProgress(progress)
@@ -30,6 +30,7 @@ const PlayerControls = ({ isPaused, duration, progress, player }) => {
 					onClick={() => {
 						setCurrentProgress(0);
 						player.previousTrack();
+						console.log(currentProgress);
 					}}
 				>
 					<SkipPrevious sx={skipStyle} />
@@ -49,6 +50,7 @@ const PlayerControls = ({ isPaused, duration, progress, player }) => {
 					onClick={() => {
 						setCurrentProgress(0);
 						player.nextTrack();
+						console.log(currentProgress);
 					}}
 				>
 					<SkipNext sx={skipStyle} />

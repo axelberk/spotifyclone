@@ -1,8 +1,9 @@
 import { Box, Divider, Grid } from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import SongRow from '../SongRow/SongRow';
+import PlayerControls from '../PlayerControls/PlayerControls';
 
-const SongTable = ({ songs, loading, spotifyApi }) => {
+const SongTable = ({ songs, loading, spotifyApi, currentProgress, setCurrentProgress }) => {
 	
 
 	const renderSongs = () => {
@@ -22,6 +23,7 @@ const SongTable = ({ songs, loading, spotifyApi }) => {
                 position={song.position}
                 contextUri={song.contextUri}
                 spotifyApi={spotifyApi}
+				setCurrentProgress={setCurrentProgress}
 			/>
 		));
 	};

@@ -6,6 +6,7 @@ import PlayerVolume from '../PlayerVolume/playerVolume';
 import PlayerOverlay from '../PlayerOverlay/PlayerOverlay';
 
 const Player = ({ spotifyApi, token }) => {
+	const [currentProgress, setCurrentProgress] = useState(0);
 	const [localPlayer, setLocalPlayer] = useState(false);
 	const [isPaused, setIsPaused] = useState();
 	const [current_track, setCurrentTrack] = useState();
@@ -14,6 +15,7 @@ const Player = ({ spotifyApi, token }) => {
 	const [progress, setProgress] = useState();
 	const [active, setActive] = useState();
 	const [playerOverlayIsOpen, setPlayerOverlayIsOpen] = useState(false);
+	
 
 	useEffect(() => {
 		const token = getAccessTokenFromStorage();

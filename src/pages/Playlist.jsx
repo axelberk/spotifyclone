@@ -7,6 +7,7 @@ const Playlist = ({spotifyApi, token}) => {
     const [playlistInfo, setPlaylistInfo] = useState()
     const [songs, setSongs] = useState([])
     const [status, setStatus] = useState({isLoading: true, isError: null})
+    const [currentProgress, setCurrentProgress] = useState(0)
     const {id} = useParams()
 
     const formatSongs = useCallback((items) => 
@@ -72,7 +73,7 @@ const Playlist = ({spotifyApi, token}) => {
 					</Typography>}
 				</Box>
 			</Box>
-            <SongTable songs={songs} loading={status.isLoading} spotifyApi={spotifyApi}/>
+            <SongTable songs={songs} loading={status.isLoading} spotifyApi={spotifyApi} setCurrentProgress={setCurrentProgress}/>
 		</Box>
 	);
 };
